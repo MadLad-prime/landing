@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>The Nunobium Manifesto</title>
+    <!-- Links are the same as index.html -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700&family=Poppins:wght@600;800&family=Roboto+Mono:wght@400&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles3.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    <script src="scripts3.js" defer></script>
+</head>
+<body>
+
+    <!-- =========== HEADER (Consistent with homepage) =========== -->
+    <header id="header">
+        <nav class="container">
+            <a href="index.html" class="nav-logo">Nu<span class="logo-period">.</span></a>
+            <div class="nav-links">
+                <a href="blog.html"><span class="nav-number">01.</span> Blog</a>
+                <a href="portfolio.html"><span class="nav-number">02.</span> Portfolio</a>
+                <a href="manifesto.html" class="active"><span class="nav-number">03.</span> Manifesto</a>
+            </div>
+        </nav>
+    </header>
+
+    <main id="manifesto-page">
+        <section class="container reveal">
+            <h1 class="page-title">The Nunobium Manifesto</h1>
+            <p class="page-subtitle">A fragmented blueprint for building things with glorious imperfection.</p>
+
+            <div id="manifesto-grid">
+                <!-- Principle 01 -->
+                <div class="grid-item principle-item">
+                    <h3>I. The Law of Opaque Causality</h3>
+                    <p>Code that works for reasons you don’t understand should not be questioned, merely revered. It is a gift from a past self who was clearly a genius. Do not touch it. Do not even look at it too hard.</p>
+                </div>
+
+                <!-- Decorative Item -->
+                <div class="grid-item deco-item" style="grid-column: 3; grid-row: 1;">
+                    <span class="deco-label">[STATUS]</span>
+                    <span class="deco-status ok">SYSTEM: STABLE...ISH</span>
+                </div>
+                
+                <!-- Principle 02 -->
+                <div class="grid-item principle-item" style="grid-column: 2 / span 2; grid-row: 2;">
+                    <h3>II. The Schrödinger's Commit</h3>
+                    <p>A commit message is both descriptive and useless until the moment you need to `git blame`. "Fix stuff" is a perfectly valid incantation that appeases the Git gods in the short term.</p>
+                </div>
+                
+                <!-- Decorative Item -->
+                <div class="grid-item deco-item" style="grid-column: 1; grid-row: 2 / span 2;">
+                    <span class="deco-label">[COORDINATES]</span>
+                    <span class="deco-text">X:42.007 Y:11.387</span>
+                    <span class="deco-label">[VECTOR]</span>
+                    <span class="deco-text">34.91° / 2.1 AU</span>
+                </div>
+                
+                <!-- Principle 03 -->
+                <div class="grid-item principle-item" style="grid-column: 4; grid-row: 2 / span 2;">
+                    <h3>III. The Documentation Paradox</h3>
+                    <p>Writing documentation is a love letter to your future self. Unfortunately, your future self suffers from amnesia and probably won't read it, assuming it's outdated anyway. Which it is.</p>
+                </div>
+                
+                <!-- Principle 04 -->
+                <div class="grid-item principle-item" style="grid-column: 2; grid-row: 3;">
+                    <h3>IV. The Dependency Gambit</h3>
+                    <p>Why write ten lines of code when you can import a 2MB library to do it for you? The `node_modules` folder is not a burden; it is a monument to collaborative progress and collective technical debt.</p>
+                </div>
+
+                 <!-- Decorative Item -->
+                <div class="grid-item deco-item" style="grid-column: 3; grid-row: 4;">
+                    <span class="deco-label">[COMPILING...]</span>
+                    <div class="deco-loader"><div></div></div>
+                </div>
+
+                <!-- Principle 05 -->
+                <div class="grid-item principle-item" style="grid-column: 1 / span 2; grid-row: 4;">
+                     <h3>V. The Principle of Belated Optimization</h3>
+                    <p>“Premature optimization is the root of all evil.” Therefore, the logical conclusion is to write the slowest possible code first, ensuring it becomes someone else's problem later. This is called job security.</p>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- =========== FOOTER (Consistent with homepage) =========== -->
+    <footer id="footer">
+        <!-- ... footer content from index.html ... -->
+    </footer>
+
+</body>
+</html>

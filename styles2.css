@@ -1,0 +1,293 @@
+/* --- GLOBAL VARIABLES & THEME --- */
+:root {
+    --dark-slate-blue: #2B3A67;
+    --off-white: #F8F8F8;
+    --azure: #007FFF;
+    --salmon-pink: #FF8C69;
+    --deep-dark: #10121a; /* Deeper, more modern dark */
+    --light-slate: #a8b2d1; /* For subtle text */
+    
+    --font-poppins: 'Poppins', sans-serif;
+    --font-inter: 'Inter', sans-serif;
+    --font-lora: 'Lora', serif;
+    --font-mono: 'SF Mono', 'Consolas', 'Menlo', monospace;
+
+    --transition-speed: 0.3s;
+}
+
+/* --- BASE & CUSTOM SCROLLBAR --- */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+html {
+    scroll-behavior: smooth;
+}
+
+body {
+    font-family: var(--font-inter);
+    background-color: var(--off-white);
+    color: var(--dark-slate-blue);
+    overflow-x: hidden;
+}
+
+/* Custom Scrollbar for a premium feel */
+::-webkit-scrollbar {
+    width: 8px;
+}
+::-webkit-scrollbar-track {
+    background: var(--deep-dark);
+}
+::-webkit-scrollbar-thumb {
+    background: var(--azure);
+    border-radius: 10px;
+}
+::-webkit-scrollbar-thumb:hover {
+    background: var(--salmon-pink);
+}
+
+.container {
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 0 1.5rem;
+}
+
+/* --- PRELOADER (Unchanged as requested) --- */
+#preloader { position: fixed; inset: 0; z-index: 9999; background-color: var(--dark-slate-blue); display: flex; align-items: center; justify-content: center; }
+/* ... other preloader styles are the same ... */
+
+/* --- HEADER & NAVIGATION --- */
+header {
+    background-color: rgba(248, 248, 248, 0.8);
+    backdrop-filter: blur(10px);
+    border-bottom: 1px solid #e5e7eb;
+    padding: 1rem 0;
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+}
+nav { display: flex; justify-content: space-between; align-items: center; }
+.nav-logo { font-family: var(--font-poppins); font-size: 1.75rem; font-weight: 800; color: var(--dark-slate-blue); text-decoration: none; }
+.nav-logo .logo-period { color: var(--azure); }
+.nav-links a { color: var(--dark-slate-blue); text-decoration: none; margin-left: 2rem; font-weight: 500; position: relative; padding: 5px 0; }
+/* Underline effect on hover */
+.nav-links a::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 2px;
+    background-color: var(--azure);
+    transform: scaleX(0);
+    transform-origin: bottom right;
+    transition: transform var(--transition-speed) ease-out;
+}
+.nav-links a:hover::after {
+    transform: scaleX(1);
+    transform-origin: bottom left;
+}
+
+/* --- HERO SECTION: Animated Gradient & Shimmer Text --- */
+#hero {
+    min-height: 85vh;
+    display: flex;
+    align-items: center;
+    position: relative;
+    /* Animated Gradient Background */
+    background: linear-gradient(-45deg, var(--dark-slate-blue), #4f00bc, var(--salmon-pink), var(--azure));
+    background-size: 400% 400%;
+    animation: gradient-flow 15s ease infinite;
+}
+@keyframes gradient-flow {
+    0% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
+}
+.hero-content {
+    opacity: 0;
+    transform: translateY(20px);
+}
+.hero-content h1 {
+    font-family: var(--font-poppins);
+    font-size: clamp(4rem, 12vw, 8rem);
+    font-weight: 800;
+    line-height: 1;
+    letter-spacing: -0.05em;
+    /* Gradient Text Effect */
+    background: linear-gradient(90deg, #fff, var(--light-slate));
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+.hero-content .subtitle {
+    font-size: clamp(1.2rem, 3vw, 1.5rem);
+    color: var(--light-slate);
+    margin-top: 1rem;
+    max-width: 500px;
+}
+/* Scroll Down Indicator */
+#hero::after {
+    content: '↓';
+    position: absolute;
+    bottom: 2rem;
+    left: 50%;
+    transform: translateX(-50%);
+    font-size: 2rem;
+    color: rgba(255, 255, 255, 0.7);
+    animation: bounce 2s infinite;
+}
+@keyframes bounce {
+    0%, 20%, 50%, 80%, 100% { transform: translate(-50%, 0); }
+    40% { transform: translate(-50%, -20px); }
+    60% { transform: translate(-50%, -10px); }
+}
+
+/* --- WORD OF THE DAY: Textured & Atmospheric --- */
+#word-of-the-day {
+    background-color: var(--deep-dark);
+    color: var(--off-white);
+    padding: 8rem 1.5rem;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+    /* Subtle noise/grain texture */
+    background-image: url('data:image/svg+xml,%3Csvg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg"%3E%3Cfilter id="noise"%3E%3CfeTurbulence type="fractalNoise" baseFrequency="0.8" numOctaves="4" stitchTiles="stitch"/%3E%3CfeColorMatrix type="saturate" values="0"/%3E%3C/filter%3E%3Crect width="100%" height="100%" filter="url(%23noise)"/%3E%3C/svg%3E');
+    background-size: 100px;
+    opacity: 0.95;
+}
+.wod-title {
+    font-family: var(--font-poppins);
+    font-size: clamp(3rem, 10vw, 7rem);
+    font-weight: 800;
+    text-transform: uppercase;
+    color: rgba(255,255,255,0.05); /* Make it almost transparent */
+    -webkit-text-stroke: 1px var(--azure); /* Give it a stroke */
+    position: relative;
+    z-index: 1;
+}
+.wod-definition {
+    font-family: var(--font-lora);
+    font-style: italic;
+    font-size: 1.5rem;
+    max-width: 600px;
+    margin: -2rem auto 0; /* Overlap with the title */
+    line-height: 1.7;
+    color: var(--light-slate);
+    position: relative;
+    z-index: 2;
+}
+
+/* --- COOL STUFF: Interactive Glowing Cards --- */
+#cool-stuff {
+    padding: 6rem 1.5rem;
+    background: var(--off-white);
+}
+#cool-stuff h2 {
+    font-family: var(--font-poppins);
+    font-size: 2.5rem;
+    text-align: center;
+    margin-bottom: 4rem;
+}
+.card-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 2rem;
+}
+.card {
+    background: var(--deep-dark);
+    color: var(--off-white);
+    border-radius: 10px;
+    padding: 2px; /* Padding for the border */
+    position: relative;
+    overflow: hidden;
+}
+/* The glowing border effect, animated with JS */
+.card::before {
+    content: '';
+    position: absolute;
+    left: 0; top: 0;
+    width: 100%; height: 100%;
+    background: radial-gradient(
+        circle at var(--mouse-x) var(--mouse-y),
+        rgba(0, 127, 255, 0.5), /* Azure with opacity */
+        transparent 20%
+    );
+    opacity: 0;
+    transition: opacity var(--transition-speed) ease-out;
+}
+.card:hover::before {
+    opacity: 1;
+}
+.card-content {
+    background: var(--deep-dark);
+    border-radius: 8px; /* Slightly smaller than the parent */
+    padding: 2rem;
+    height: 100%;
+    position: relative; /* To sit on top of the ::before pseudo-element */
+    z-index: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+.card h3 {
+    font-family: var(--font-poppins);
+    font-size: 1.5rem;
+    margin-bottom: 0.75rem;
+    color: var(--off-white);
+}
+.card p {
+    line-height: 1.6;
+    color: var(--light-slate);
+    margin-bottom: 1.5rem;
+}
+.card a {
+    color: var(--azure);
+    text-decoration: none;
+    font-weight: 500;
+    display: inline-block;
+    transition: transform var(--transition-speed);
+}
+.card a:hover {
+    transform: translateX(5px);
+}
+
+/* --- FOOTER: Enhanced CLI Theme --- */
+#footer {
+    background-color: #0d0e13; /* Even darker for terminal feel */
+    color: var(--off-white);
+    padding: 4rem 0;
+    font-family: var(--font-mono);
+    position: relative;
+    /* Terminal Grid Background */
+    background-image:
+        linear-gradient(rgba(0,127,255,0.1) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(0,127,255,0.1) 1px, transparent 1px);
+    background-size: 2rem 2rem;
+}
+.footer-content { text-align: center; position: relative; z-index: 2; }
+.cli-line { display: flex; justify-content: center; align-items: center; font-size: 1.1rem; }
+.cli-prompt { color: var(--salmon-pink); margin-right: 0.5rem; }
+.cli-command { color: var(--off-white); }
+.cli-cursor {
+    display: inline-block; background-color: var(--off-white);
+    width: 8px; height: 1.2rem; margin-left: 0.5rem;
+    animation: blink 1s steps(1) infinite;
+}
+@keyframes blink { 50% { opacity: 0; } }
+.footer-links {
+    margin-top: 1.5rem;
+    margin-bottom: 2rem;
+    opacity: 0; /* Faded in by JS */
+    transform: translateY(20px); /* Moved down by JS */
+}
+.footer-links a { color: var(--off-white); text-decoration: none; margin: 0 1rem; opacity: 0.7; transition: all var(--transition-speed); }
+.footer-links a:hover { opacity: 1; color: var(--azure); text-shadow: 0 0 10px var(--azure); }
+.footer-disclaimer {
+    font-size: 0.9rem;
+    opacity: 0; /* Faded in by JS */
+    transform: translateY(20px);
+    color: var(--light-slate);
+}
