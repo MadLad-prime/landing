@@ -1,0 +1,264 @@
+/* --- Global Variables & Reset --- */
+:root {
+    --dark-slate-blue: #2B3A67;
+    --off-white: #F8F8F8;
+    --azure: #007FFF;
+    --salmon-pink: #FF8C69;
+    --deep-dark: #111827; /* For high-contrast sections */
+    --font-poppins: 'Poppins', sans-serif;
+    --font-inter: 'Inter', sans-serif;
+    --font-lora: 'Lora', serif;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: var(--font-inter);
+    background-color: var(--off-white);
+    color: var(--dark-slate-blue);
+    overflow-x: hidden; /* Prevent horizontal scroll */
+}
+
+.container {
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 0 1.5rem;
+}
+
+/* --- Preloader Styles (Unchanged) --- */
+#preloader {
+    position: fixed; inset: 0; z-index: 9999;
+    background-color: var(--dark-slate-blue);
+    display: flex; align-items: center; justify-content: center;
+}
+.preloader-box {
+    position: relative; width: 16rem; height: 16rem;
+    border: 4px solid var(--azure); display: flex; flex-direction: column;
+    justify-content: space-between; padding: 1rem; font-family: var(--font-poppins);
+    color: var(--off-white); overflow: hidden; opacity: 0;
+}
+.preloader-box .atomic-number, .preloader-box .atomic-mass { font-size: 1.5rem; }
+.preloader-box .atomic-number { align-self: flex-start; }
+.preloader-box .atomic-mass { align-self: flex-end; }
+.preloader-box .element-info { text-align: center; }
+.preloader-box .element-symbol { font-size: 6rem; font-weight: 800; line-height: 1; }
+.preloader-box .element-name { font-size: 1.25rem; }
+.scanline {
+    position: absolute; top: 0; left: 0; width: 100%; height: 2px;
+    background: var(--azure); opacity: 0.6; transform: translateY(-100%);
+}
+
+/* --- Header & Navigation --- */
+header {
+    background-color: var(--off-white);
+    border-bottom: 1px solid #e5e7eb;
+    padding: 1rem 0;
+}
+nav {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+.nav-logo {
+    font-family: var(--font-poppins);
+    font-size: 1.75rem;
+    font-weight: 800;
+    color: var(--dark-slate-blue);
+    text-decoration: none;
+}
+.nav-logo .logo-period {
+    color: var(--azure);
+}
+.nav-links a {
+    color: var(--dark-slate-blue);
+    text-decoration: none;
+    margin-left: 2rem;
+    font-weight: 500;
+    transition: color 0.2s;
+}
+.nav-links a:hover {
+    color: var(--azure);
+}
+
+/* --- Hero Section --- */
+#hero {
+    min-height: 60vh;
+    display: flex;
+    align-items: center;
+    text-align: left;
+}
+.hero-content {
+    opacity: 0; /* Animated by JS */
+    transform: translateY(20px); /* Animated by JS */
+}
+.hero-content h1 {
+    font-family: var(--font-poppins);
+    font-size: clamp(3.5rem, 10vw, 7rem);
+    font-weight: 800;
+    line-height: 1;
+    letter-spacing: -0.05em;
+    color: var(--dark-slate-blue);
+}
+.hero-content .subtitle {
+    font-size: clamp(1.2rem, 3vw, 1.5rem);
+    color: var(--dark-slate-blue);
+    opacity: 0.7;
+    margin-top: 1rem;
+    max-width: 500px;
+}
+
+/* --- NEW: Wrapper for consistent spacing --- */
+.section-wrapper {
+    padding: 6rem 0;
+}
+@media (max-width: 640px) {
+    .section-wrapper { padding: 4rem 0; }
+}
+
+/* --- Word of the Day Section --- */
+#word-of-the-day {
+    background-color: var(--deep-dark);
+    color: var(--off-white);
+    padding: 6rem 1.5rem;
+    text-align: center;
+}
+.wod-title {
+    font-family: var(--font-poppins);
+    font-size: clamp(3rem, 8vw, 6rem);
+    font-weight: 800;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--off-white);
+    text-shadow: 0 0 15px var(--azure);
+}
+.wod-definition {
+    font-family: var(--font-lora);
+    font-style: italic;
+    font-size: 1.25rem;
+    max-width: 600px;
+    margin: 1.5rem auto 0;
+    line-height: 1.6;
+    opacity: 0.8;
+}
+/* Initial state for animation */
+.wod-title, .wod-definition {
+    opacity: 0;
+    transform: translateY(30px);
+}
+
+/* --- Cool Stuff Section --- */
+#cool-stuff {
+    /* Removed padding, it's on the wrapper now */
+}
+#cool-stuff h2 {
+    font-family: var(--font-poppins);
+    font-size: 2.5rem;
+    text-align: center;
+    margin-bottom: 3rem;
+    color: var(--dark-slate-blue);
+}
+/* Initial state for animation */
+#cool-stuff h2, .card {
+    opacity: 0;
+    transform: translateY(30px);
+}
+
+.card-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 2rem;
+    margin-top: 3rem;
+}
+.card {
+    background-color: #fff;
+    border: 1px solid #e5e7eb;
+    border-radius: 8px;
+    padding: 2rem;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+.card:hover {
+    transform: translateY(-8px);
+    box-shadow: 0 10px 20px rgba(43, 58, 103, 0.1);
+}
+.card h3 {
+    font-family: var(--font-poppins);
+    font-size: 1.5rem;
+    margin-bottom: 0.75rem;
+}
+.card p {
+    line-height: 1.6;
+    opacity: 0.8;
+    margin-bottom: 1.5rem;
+}
+.card a {
+    color: var(--azure);
+    text-decoration: none;
+    font-weight: 500;
+}
+
+/* --- Special Footer --- */
+#footer {
+    background-color: var(--deep-dark);
+    color: var(--off-white);
+    padding: 4rem 0;
+    font-family: 'SF Mono', 'Consolas', 'Menlo', monospace;
+}
+.cli-line {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 1.1rem;
+}
+.cli-prompt {
+    color: var(--salmon-pink);
+    margin-right: 0.5rem;
+}
+.cli-command {
+    color: var(--off-white);
+}
+.cli-cursor {
+    display: inline-block;
+    background-color: var(--off-white);
+    width: 8px;
+    height: 1.2rem;
+    margin-left: 0.5rem;
+    animation: blink 1s steps(1) infinite;
+}
+@keyframes blink {
+    50% { opacity: 0; }
+}
+.footer-links {
+    margin-top: 1.5rem;
+    margin-bottom: 2rem;
+}
+.footer-links a {
+    color: var(--off-white);
+    text-decoration: none;
+    margin: 0 1rem;
+    opacity: 0.7;
+    transition: opacity 0.2s;
+}
+.footer-links a:hover {
+    opacity: 1;
+    color: var(--azure);
+}
+.footer-disclaimer {
+    font-size: 0.9rem;
+    opacity: 0.5;
+}
+/* Initial state for animation */
+.cli-line, .footer-links, .footer-disclaimer {
+    opacity: 0;
+    transform: translateY(30px);
+}
+
+/* --- Responsive Adjustments --- */
+@media (max-width: 640px) {
+    .nav-links { display: none; } /* On mobile, consider a hamburger menu */
+    .hero-content h1 { font-size: 3.5rem; }
+    #cool-stuff, #word-of-the-day { padding: 4rem 0; }
+}

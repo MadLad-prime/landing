@@ -1,0 +1,368 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Nunobium | The World's Greatest (Terrible) Engineer</title>
+
+    <!-- Google Fonts: Poppins and Inter -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500&family=Poppins:wght@600;700;800&display=swap" rel="stylesheet">
+
+    <!-- GSAP Animation Library (from CDN) -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+
+    <style>
+        /* ------------------------- */
+        /* --- CSS STYLESHEET --- */
+        /* ------------------------- */
+
+        :root {
+            --dark-slate-blue: #2B3A67;
+            --off-white: #F8F8F8;
+            --azure: #007FFF;
+            --salmon-pink: #FF8C69;
+            --hero-gradient: linear-gradient(135deg, #2B3A67 0%, #4A00E0 50%, #FF8C69 100%);
+            --font-poppins: 'Poppins', sans-serif;
+            --font-inter: 'Inter', sans-serif;
+        }
+
+        /* --- Base & Reset --- */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: var(--font-inter);
+            background-color: var(--dark-slate-blue);
+            color: var(--off-white);
+            overflow-x: hidden;
+        }
+
+        /* --- Preloader --- */
+        #preloader {
+            position: fixed;
+            inset: 0;
+            z-index: 9999;
+            background-color: var(--dark-slate-blue);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .preloader-box {
+            position: relative;
+            width: 16rem; /* 256px */
+            height: 16rem; /* 256px */
+            border: 4px solid var(--azure);
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            padding: 1rem;
+            font-family: var(--font-poppins);
+            color: var(--off-white);
+            overflow: hidden;
+            /* Elements are invisible by default for animation */
+            opacity: 0; 
+        }
+
+        .preloader-box .atomic-number {
+            align-self: flex-start;
+            font-size: 1.5rem;
+        }
+        .preloader-box .atomic-mass {
+            align-self: flex-end;
+            font-size: 1.5rem;
+        }
+        .preloader-box .element-info {
+            text-align: center;
+        }
+        .preloader-box .element-symbol {
+            font-size: 6rem;
+            font-weight: 800;
+            line-height: 1;
+        }
+        .preloader-box .element-name {
+            font-size: 1.25rem;
+        }
+
+        .scanline {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 2px;
+            background: var(--azure);
+            opacity: 0.6;
+            transform: translateY(-100%); /* Start off-screen */
+        }
+        
+        /* --- Navigation Bar --- */
+        nav {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            z-index: 1000;
+            transition: background-color 0.3s ease-in-out, backdrop-filter 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
+        }
+
+        .navbar-container {
+            max-width: 80rem; /* 1280px */
+            margin: 0 auto;
+            padding: 0 2rem;
+            height: 4rem; /* 64px */
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .nav-logo {
+            font-family: var(--font-poppins);
+            font-size: 1.75rem;
+            font-weight: 700;
+            color: var(--azure);
+            text-decoration: none;
+        }
+
+        .nav-links a {
+            color: var(--off-white);
+            text-decoration: none;
+            margin-left: 2rem;
+            transition: color 0.2s;
+        }
+
+        .nav-links a:hover {
+            color: var(--azure);
+        }
+
+        /* Scrolled state for the navbar */
+        nav.scrolled {
+            background-color: rgba(43, 58, 103, 0.8);
+            backdrop-filter: blur(10px);
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        /* --- Hero Section --- */
+        #home {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            padding: 1rem;
+            background-image: var(--hero-gradient);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero-content {
+            z-index: 10;
+            /* Invisible by default, for JS animation */
+            opacity: 0;
+            transform: translateY(20px);
+        }
+
+        .hero-content h1 {
+            font-family: var(--font-poppins);
+            font-size: clamp(3.5rem, 10vw, 8rem); /* Responsive font size */
+            font-weight: 800;
+            letter-spacing: -0.05em;
+            color: #fff;
+        }
+        
+        .hero-content .subtitle {
+            font-size: clamp(1.2rem, 3vw, 1.5rem);
+            font-weight: 400;
+            color: rgba(248, 248, 248, 0.8);
+            margin-top: 0.5rem;
+        }
+
+        .hero-content .intro {
+            max-width: 38rem; /* 600px */
+            margin: 1.5rem auto 0;
+            font-size: 1.1rem;
+            line-height: 1.6;
+            color: var(--off-white);
+        }
+
+        .hero-cta {
+            display: inline-block;
+            margin-top: 2rem;
+            background-color: var(--azure);
+            color: white;
+            font-weight: 600;
+            padding: 0.75rem 2rem;
+            border-radius: 9999px;
+            text-decoration: none;
+            transition: transform 0.3s ease;
+        }
+        
+        .hero-cta:hover {
+            transform: scale(1.05);
+        }
+
+        /* Decorative blobs for the background */
+        .blob {
+            position: absolute;
+            border-radius: 50%;
+            filter: blur(80px);
+            opacity: 0.3;
+            z-index: 1;
+        }
+        .blob.salmon {
+            width: 20rem; height: 20rem;
+            background-color: var(--salmon-pink);
+            top: -5rem; left: -5rem;
+        }
+        .blob.azure {
+            width: 25rem; height: 25rem;
+            background-color: var(--azure);
+            bottom: -8rem; right: -8rem;
+        }
+        
+        /* --- Placeholder Sections --- */
+        .placeholder {
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .placeholder h2 {
+            font-family: var(--font-poppins);
+            font-size: 3rem;
+        }
+        .light-bg {
+            background-color: var(--off-white);
+            color: var(--dark-slate-blue);
+        }
+        .dark-bg {
+            background-color: var(--dark-slate-blue);
+            color: var(--off-white);
+        }
+
+        /* --- Responsive Design --- */
+        @media (max-width: 768px) {
+            .nav-links {
+                display: none; /* Hide links on mobile for simplicity, can be replaced by a hamburger menu */
+            }
+            .preloader-box {
+                width: 14rem;
+                height: 14rem;
+            }
+            .preloader-box .element-symbol {
+                font-size: 5rem;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- =========== PRELOADER =========== -->
+    <div id="preloader">
+        <div class="preloader-box">
+            <div class="scanline"></div>
+            <span class="atomic-number">42</span>
+            <div class="element-info">
+                <h1 class="element-symbol">Nu</h1>
+                <p class="element-name">Nunobium</p>
+            </div>
+            <span class="atomic-mass">32.0</span>
+        </div>
+    </div>
+
+    <!-- =========== NAVIGATION BAR =========== -->
+    <nav id="navbar">
+        <div class="navbar-container">
+            <a href="#home" class="nav-logo">Nu</a>
+            <div class="nav-links">
+                <a href="#home">Home</a>
+                <a href="#blog">Blog</a>
+                <a href="#portfolio">Portfolio</a>
+                <a href="#manifesto">Manifesto</a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- =========== HERO SECTION =========== -->
+    <section id="home">
+        <div class="blob salmon"></div>
+        <div class="blob azure"></div>
+        <div class="hero-content">
+            <h1>Nuno.</h1>
+            <p class="subtitle">The World's Greatest (Terrible) Engineer.</p>
+            <p class="intro">I build things for the web, occasionally break them, and document the entire process. This is my site.</p>
+            <a href="#portfolio" class="hero-cta">Explore My Work</a>
+        </div>
+    </section>
+
+    <!-- =========== PLACEHOLDER SECTIONS =========== -->
+    <section id="blog" class="placeholder light-bg">
+        <h2>Blog Section Coming Soon...</h2>
+    </section>
+
+    <section id="portfolio" class="placeholder dark-bg">
+        <h2>Portfolio Section Coming Soon...</h2>
+    </section>
+
+    <section id="manifesto" class="placeholder light-bg">
+        <h2>Manifesto Section Coming Soon...</h2>
+    </section>
+
+
+    <script>
+    /* --------------------------------- */
+    /* --- JAVASCRIPT LOGIC --- */
+    /* --------------------------------- */
+    
+    document.addEventListener('DOMContentLoaded', () => {
+
+        // --- 1. PRELOADER & HERO ANIMATION using GSAP ---
+        const preloader = document.getElementById('preloader');
+        const preloaderBox = document.querySelector('.preloader-box');
+        const scanline = document.querySelector('.scanline');
+        const heroContent = document.querySelector('.hero-content');
+
+        // GSAP Timeline allows for sequencing animations
+        const tl = gsap.timeline();
+
+        tl
+        // Animate the preloader box into view
+        .to(preloaderBox, { opacity: 1, duration: 0.5 })
+        // Animate the text elements inside the box with a stagger
+        .from(preloaderBox.children, { y: 20, opacity: 0, stagger: 0.2, duration: 0.5 })
+        // Animate the scanline
+        .to(scanline, { y: '100vh', duration: 1.5, ease: 'power2.inOut' }, "-=1")
+        // Fade out the preloader
+        .to(preloader, { opacity: 0, duration: 0.8, delay: 0.5 })
+        // Hide the preloader completely after animation
+        .set(preloader, { display: 'none' })
+        // Fade in the hero content after the preloader is gone
+        .to(heroContent, { opacity: 1, y: 0, duration: 0.8, ease: 'power2.out' }, "-=0.5");
+
+
+        // --- 2. NAVBAR SCROLL EFFECT ---
+        const navbar = document.getElementById('navbar');
+
+        const handleScroll = () => {
+            if (window.scrollY > 50) {
+                navbar.classList.add('scrolled');
+            } else {
+                navbar.classList.remove('scrolled');
+            }
+        };
+
+        window.addEventListener('scroll', handleScroll);
+    });
+
+    </script>
+
+</body>
+</html>
